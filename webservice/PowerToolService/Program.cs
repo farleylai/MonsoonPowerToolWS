@@ -503,7 +503,6 @@ namespace PowerToolService
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Host: {0}", GetIP());
             Uri baseAddress = new Uri("http://" + GetIP() + ":8080/powertool");
             using (ServiceHost host = new ServiceHost(typeof(PowerToolService), baseAddress))
             {
