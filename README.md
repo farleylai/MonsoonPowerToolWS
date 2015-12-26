@@ -1,2 +1,2 @@
 # Monsoon PowerTool Service
-Monsoon Power Tool Webservice
+Monsoon PowerTool Webservice and Client.
