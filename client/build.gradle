@@ -29,9 +29,9 @@ tasks.withType(Test) {
     it.outputs.upToDateWhen { false }
 }
 
-def resWsdl = file('src/main/resources/wsdl')
+def resWsdl = file('src/test/resources/wsdl')
 def powertoolWsdl = 'powertool.wsdl'
-def wsdlUrl = '192.168.1.9:8080/powertool?singleWsdl'
+def wsdlUrl = '192.168.1.10:8080/powertool?singleWsdl'
 
 task fetchPowerToolWSDL(type: Exec) {
     resWsdl.mkdirs()
