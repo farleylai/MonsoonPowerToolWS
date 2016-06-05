@@ -31,11 +31,11 @@ tasks.withType(Test) {
 
 def resWsdl = file('src/main/resources/wsdl')
 def powertoolWsdl = 'powertool.wsdl'
-def wsdlUrl = '192.168.0.106:8080/powertool?singleWsdl'
+def wsdlUrl = '192.168.1.9:8080/powertool?singleWsdl'
 
 task fetchPowerToolWSDL(type: Exec) {
     workingDir resWsdl
-    commandLine 'wget', '-O', powertoolWsdl, wsdlUrl
+    commandLine 'curl', '-O', powertoolWsdl, wsdlUrl
     outputs.dir workingDir
 }
 
