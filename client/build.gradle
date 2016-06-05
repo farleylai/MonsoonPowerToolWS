@@ -50,5 +50,6 @@ wsdl2java {
     generatedWsdlDir = file("$buildDir/generated")
 }
 
+test.testLogging.showStandardStreams = true
 wsdl2java.dependsOn fetchPowerToolWSDL
 compileTestJava.dependsOn wsdl2java

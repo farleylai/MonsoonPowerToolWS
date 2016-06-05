@@ -37,19 +37,24 @@ public class PowerToolServiceTest {
         Holder<Long> count = new Holder<>();
         Holder<ArrayOfunsignedShort> serials = new Holder<>();
         pt.enumerateDevices(count, serials);
-        assertEquals(1, count.value.longValue());
-        assertEquals(6325, serials.value.getUnsignedShort().get(0).longValue());
-        
+	while(count.value.longValue() == 0) {
+	    System.out.println("No Monsoon power monitor is enumerated, retry...");
+	    Thread.sleep(1000);
+            pt.enumerateDevices(count, serials);
+            //assertEquals(1, count.value.longValue());
+            //assertEquals(6325, serials.value.getUnsignedShort().get(0).longValue());
+        }
+
         // Open application, connect device and set parameters for sampling the main channel
         // No need to set trigger setting and it works better when visible
         assertTrue(pt.openApplicationFG(false, true, true));
         assertTrue(pt.connectDevice(serials.value.getUnsignedShort().get(0).intValue()));
         pt.setUsbPassthroughMode(UsbPassthroughMode.AUTO);
-        pt.setEnableMainOutputVoltage(!true);
+        pt.setEnableMainOutputVoltage(true);
         //pt.setMainOutputVoltageSetting(3.7f);
-        pt.setBatterySize(1650L);
-        //pt.setMainOutputVoltageSetting(3.8f);
-        //pt.setBatterySize(3220L);
+        //pt.setBatterySize(1650L);
+        pt.setMainOutputVoltageSetting(3.8f);
+        pt.setBatterySize(3220L);
 
         // start/stop sampling and print progress every second
         assertTrue(pt.startSamplingF(true));
