@@ -146,12 +146,16 @@ namespace PowerToolService
             Instance = this;
             ushort[] serialNumbers = null;
             uint count = pt.EnumerateDevices(out serialNumbers);
-            if(count > 0) {
-                for (int i = 0; i < count; i++)
-                    Console.WriteLine("PowerTool serial[{0}]: {1}", i, serialNumbers[i]);
-            } else {
-                Console.WriteLine("No Monsoon Power Monitor are attached");
+            int retry = 0;
+            while (count == 0)
+            {
+                System.Threading.Thread.Sleep(1000);
+                Console.WriteLine("No Monsoon Power Monitor are enumerated, retry...");
+                count = pt.EnumerateDevices(out serialNumbers);
             }
+
+            for (int i = 0; i < count; i++)
+                Console.WriteLine("PowerTool serial[{0}]: {1}", i, serialNumbers[i]);
         }
 
         public bool ApplicationIsOpen
