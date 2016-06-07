@@ -146,7 +146,6 @@ namespace PowerToolService
             Instance = this;
             ushort[] serialNumbers = null;
             uint count = pt.EnumerateDevices(out serialNumbers);
-            int retry = 0;
             while (count == 0)
             {
                 System.Threading.Thread.Sleep(1000);
