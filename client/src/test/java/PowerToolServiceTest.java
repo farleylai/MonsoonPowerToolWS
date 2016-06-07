@@ -1,3 +1,4 @@
+import java.io.File;
 import java.math.BigInteger;
 import javax.xml.ws.Holder;
 import com.microsoft.schemas._2003._10.serialization.arrays.*;
@@ -30,7 +31,8 @@ public class PowerToolServiceTest {
             assertTrue(pt.closeApplicationF(false, true));
         if(pt.getDeviceCount() == 0) {
             // FIXME if resetPowerMonitor returns false, reboot the power monitor
-            assertTrue(pt.resetPowerMonitor());
+            throw new RuntimeException("No Monsoon power meter is plugged in");
+            //assertTrue(pt.resetPowerMonitor());
         }
 
         // Enumerate devices, assume only one attached
@@ -41,9 +43,8 @@ public class PowerToolServiceTest {
 	    System.out.println("No Monsoon power monitor is enumerated, retry...");
 	    Thread.sleep(1000);
             pt.enumerateDevices(count, serials);
-            //assertEquals(1, count.value.longValue());
-            //assertEquals(6325, serials.value.getUnsignedShort().get(0).longValue());
         }
+        System.out.printf("Found connected Monsoon monitor of serial %d\n", serials.value.getUnsignedShort().get(0).intValue());
 
         // Open application, connect device and set parameters for sampling the main channel
         // No need to set trigger setting and it works better when visible
@@ -51,9 +52,7 @@ public class PowerToolServiceTest {
         assertTrue(pt.connectDevice(serials.value.getUnsignedShort().get(0).intValue()));
         pt.setUsbPassthroughMode(UsbPassthroughMode.AUTO);
         pt.setEnableMainOutputVoltage(true);
-        //pt.setMainOutputVoltageSetting(3.7f);
-        //pt.setBatterySize(1650L);
-        pt.setMainOutputVoltageSetting(3.8f);
+        pt.setMainOutputVoltageSetting(3.7f);
         pt.setBatterySize(3220L);
 
         // start/stop sampling and print progress every second
@@ -63,15 +62,17 @@ public class PowerToolServiceTest {
             assertTrue(pt.getSampleIsRunning());
             Thread.sleep(2 * 1000);
             SelectionData sd = pt.getSelectionData();
-            System.out.printf("Instant main channel: samples=%d, current=%f.2, voltage=%f.2\n", sd.getSampleCount(), sd.getInstMainCurrent(), sd.getInstMainVoltage());
+            System.out.printf("Instant main channel: samples=%d, current=%f.2, voltage=%f.2\n", 
+                                sd.getSampleCount(), sd.getInstMainCurrent(), sd.getInstMainVoltage());
         }
         assertTrue(pt.stopSamplingF(true));
 
         // save samples in pt5 and csv on the Windows machine
         assertTrue(pt.getHasData());
-        String filename = "D:\\home\\farleylai\\PowerTool\\datafile";
-        //assertTrue(pt.saveFile(filename + ".pt5", true, true));
+        //String filename = "\\\\vmware-host\\Shared Folders\\Downloads\\pt";
+        String filename = "C:\\Users\\LaiFarley\\Downloads\\pt";
         assertTrue(pt.exportCSV(ZERO, pt.getTotalSampleCount().subtract(ONE), 1L, filename + ".csv", true, true));
+        //assertTrue(pt.saveFile(filename + ".pt5", true, true));
 
         // disconnect and close
         assertTrue(pt.disconnectDevice());
