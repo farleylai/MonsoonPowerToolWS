@@ -136,6 +136,7 @@ namespace PowerToolService
 
         private static PowerToolService Instance;
         private Automation pt;
+        private string timestamp;
         public PowerToolService()
         {
             pt = new Automation();
@@ -401,7 +402,7 @@ namespace PowerToolService
 
         public bool ExportCSV(ulong lowIndex, ulong highIndex, uint granularity, string fileName, bool overwriteFile, bool createDirectory)
         {
-            return pt.ExportCSV(lowIndex, highIndex, granularity, fileName, overwriteFile, createDirectory);
+            return pt.ExportCSV(lowIndex, highIndex, granularity, fileName + "-" + timestamp, overwriteFile, createDirectory);
         }
 
         public bool GetSample(ulong sampleIndex, out Sample sample)
@@ -461,11 +462,13 @@ namespace PowerToolService
 
         public bool StartSamplingL(uint waitLimit)
         {
+            timestamp = DateTime.Now.ToString("yyyyMMdd-HHmmss");
             return pt.StartSampling(waitLimit);
         }
 
         public bool StartSamplingF(bool waitFlag)
         {
+            timestamp = DateTime.Now.ToString("yyyyMMdd-HHmmss");
             return pt.StartSampling(waitFlag);
         }
 
