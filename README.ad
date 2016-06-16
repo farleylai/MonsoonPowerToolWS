@@ -1,2 +1,20 @@
-# Monsoon PowerTool Service
-Monsoon PowerTool Webservice and Client.
+= Monsoon PowerTool Web Service
+
+Monsoon Power Monitor is commonly used by researchers and engineers to measure energy consumption at high frequency.
+However, the lack of support for Mac OS X and Linux is a big turnoff and inconvenient.
+The monsoon.py included in AOSP is problematic on Mac OS X.
+The serial port access over USB blocks indefinitely every so often.
+Official support for Windows only renders virtual machine and web service as alternatives.
+Unfortunately, access the device through a virtual machine is not guaranteed to work.
+For example, the device enumeration may return nothing, unlike on a real Windows machine.
+Therefore, setting up the web service on real Windows for remote control would the remaining solution.
+
+This project contains the Monsoon PowerTool Web Service in C# and a Java client.
+There is also has a setup subproject for installation on Windows.
+The Java client can be built with Gradle to test the remote web service as follows.
+View `build.gradle` for details to set the WSDL URL.
+
+[source,bash]
+----
+client$> gradle test
+----
