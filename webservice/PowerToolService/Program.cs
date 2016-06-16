@@ -154,7 +154,7 @@ namespace PowerToolService
             for (int i = 0; i < count; i++)
             {
                 Console.WriteLine("PowerTool serial[{0}]: {1}", i, serialNumbers[i]);
-                pt.OpenApplication(false, true, false);
+                pt.OpenApplication(false, true, !false);
                 if (!pt.DeviceIsConnected && !pt.ConnectDevice(serialNumbers[i]))
                 {
                     pt.CloseApplication(false, true);
@@ -163,6 +163,7 @@ namespace PowerToolService
                 pt.EnableMainOutputVoltage = true;
                 pt.MainOutputVoltageSetting = 3.7f;
                 pt.UsbPassthroughMode = UsbPassthroughMode.Auto;
+                pt.DisconnectDevice();
                 pt.CloseApplication(false, true);
             }
 
