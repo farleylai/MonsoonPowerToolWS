@@ -18,3 +18,8 @@ View `build.gradle` for details to set the WSDL URL.
 ----
 client$> gradle test
 ----
+
+[NOTE]
+====
+The APIs are based on PowerTool 4.0.5.2.
+====
