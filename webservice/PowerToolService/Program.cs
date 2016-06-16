@@ -65,9 +65,6 @@ namespace PowerToolService
         WindowState WindowState { [OperationContract]get; [OperationContract]set; }
 
         [OperationContract]
-        string SayHello(string name);
-
-        [OperationContract]
         uint EnumerateDevices(out ushort[] serialNumbers);
         [OperationContract]
         ushort GetSerialNumber(uint deviceNumber);
@@ -155,7 +152,20 @@ namespace PowerToolService
             }
 
             for (int i = 0; i < count; i++)
+            {
                 Console.WriteLine("PowerTool serial[{0}]: {1}", i, serialNumbers[i]);
+                pt.OpenApplication(false, true, false);
+                if (!pt.DeviceIsConnected && !pt.ConnectDevice(serialNumbers[i]))
+                {
+                    pt.CloseApplication(false, true);
+                    throw new System.InvalidOperationException("Failed to connect device");
+                }
+                pt.EnableMainOutputVoltage = true;
+                pt.MainOutputVoltageSetting = 3.7f;
+                pt.UsbPassthroughMode = UsbPassthroughMode.Auto;
+                pt.CloseApplication(false, true);
+            }
+
         }
 
         public bool ApplicationIsOpen
@@ -480,11 +490,6 @@ namespace PowerToolService
         public bool StopSamplingF(bool waitFlag)
         {
             return pt.StopSampling(waitFlag);
-        }
-
-        public string SayHello(string name)
-        {
-            return string.Format("Hello, {0}", name);
         }
     }
 
