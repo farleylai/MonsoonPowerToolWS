@@ -1,0 +1,55 @@
+buildscript{
+    repositories{
+        jcenter()
+    }
+    dependencies {
+        // Apache CXF wsdl2java gradle plugin
+        classpath 'no.nils:wsdl2java:0.8'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'no.nils.wsdl2java'
+
+repositories{
+    jcenter()
+}
+
+dependencies() {
+    testCompile 'junit:junit:4.12'
+}
+
+test {
+    testLogging {
+        showStandardStreams = true
+    }
+}
+
+tasks.withType(Test) {
+    it.outputs.upToDateWhen { false }
+}
+
+def resWsdl = file('src/test/resources/wsdl')
+def powertoolWsdl = 'powertool.wsdl'
+def wsdlUrl = '192.168.1.10:8080/powertool?singleWsdl'
+
+task fetchPowerToolWSDL(type: Exec) {
+    resWsdl.mkdirs()
+    workingDir resWsdl
+    outputs.file "$workingDir/$powertoolWsdl"
+    commandLine 'curl', '-o', powertoolWsdl, wsdlUrl
+    //commandLine 'wget', '-O', powertoolWsdl, wsdlUrl
+}
+
+wsdl2java {
+    cxfVersion = "3.1.4"
+    wsdlDir = resWsdl
+    wsdlsToGenerate = [
+        ["$resWsdl/$powertoolWsdl"]
+    ]
+    generatedWsdlDir = file("$buildDir/generated")
+}
+
+test.testLogging.showStandardStreams = true
+wsdl2java.dependsOn fetchPowerToolWSDL
+compileTestJava.dependsOn wsdl2java

@@ -1,10 +1,3 @@
-= Monsoon Power Tool Web Service for Scripting
-Farley Lai
-{docdatetime}
-:jbake-type: post
-:jbake-status: published
-:jbake-tags: Monsoon power monitor, web service, apache cxf, Gradle, C#
-
 image::http://farleylai.github.io/images/monsoonpm.jpg[align="center", width="800", Monsoon Power Monitor]
 
 Monsoon Power Monitor is commonly used by researchers and engineers to measure energy consumption at high frequency.
