@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>ATrace</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+   
+
+
+		<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../notes/about.html">Farley Lai</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../index.html">Blog</a></li>
+            <li><a href="../../notes/projects.html">Projects</a></li>
+            <li><a href="../../notes/research.html">Research</a></li>
+            <li><a href="../../notes/events.html">Events</a></li>
+            <li><a href="../../notes/art.html">Art</a></li>
+            <li><a href="../../archive.html">Archive</a></li>
+            <li><a href="../../feed.xml">Feed</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shortcut <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="../../notes/linux.html">Linux</a></li>
+                <li><a href="../../notes/groovy.html">Groovy</a></li>
+                <li><a href="../../notes/tools.html">Tools</a></li>
+                <li><a href="../../notes/resources.html">Resources</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Compiler</li>
+                <li><a href="../../notes/compiler/DataFlowAnalysis.html">Data-Flow Analsyis</a></li>
+                <li><a href="../../notes/compiler/StaticSingleAssignmentForm.html">Static Single Assignement Form</a></li>
+                <li><a href="../../notes/compiler/CompilerOptimizations.html">Compiler Optimizations</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/farleylai"><i class="fa fa-github"></i></a></li>
+            <li><a href="https://plus.google.com/+FarleyLai/"><i class="fa fa-google-plus"></i></a>
+            <li><a href="https://www.linkedin.com/in/farleylai"><i class="fa fa-linkedin"></i></a>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">
+
+	
+	<div class="page-header">
+		<h1>ATrace</h1>
+	</div>
+
+	<p><em>12 December 2015</em></p>
+
+	<p><div class="sect1">
+<h2 id="_clock_sync_marker">Clock Sync Marker</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>From clock_gettime() with posix clock
+- systemTime(CLOCK_MONOTONIC) / 1000000000.0f
+- systemTime(CLOCK_REALTIME) / 1000000
+Otherwise, gettimeofday()</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_category_support">Category Support</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A category is supported only if all its required /sys/ files are writable and if enabling the category will enable one or more tracing tags or /sys/ files
+- found one of the required enable paths exists</p>
+</div>
+<div class="paragraph">
+<p>Support for root
+- found one of the required enable paths is writable</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_trace_properties">Trace Properties</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p>[] /d/tracing/trace</p>
+</li>
+<li>
+<p>[] /d/tracing/tracing_on</p>
+</li>
+<li>
+<p>[] /d/tracing/trace_clock</p>
+</li>
+<li>
+<p>[] /d/tracing/buffer_size_kb</p>
+</li>
+<li>
+<p>[] /d/tracing/options/overwrite</p>
+</li>
+<li>
+<p><i class="icon-check-empty"></i> /d/tracing/current_tracer             // nop, function_graph</p>
+</li>
+<li>
+<p><i class="icon-check"></i> /d/tracing/set_ftrace_filter</p>
+</li>
+<li>
+<p><i class="icon-check"></i> /d/tracing/options/funcgraph-abstime</p>
+</li>
+<li>
+<p><i class="icon-check"></i> /d/tracing/options/funcgraph-cpu</p>
+</li>
+<li>
+<p><i class="icon-check"></i> /d/tracing/options/funcgraph-proc</p>
+</li>
+<li>
+<p><i class="icon-check"></i> /d/tracing/options/funcgraph-flat</p>
+</li>
+<li>
+<p><i class="icon-check"></i> /d/tracing/options/funcgraph-duration</p>
+</li>
+<li>
+<p><i class="icon-check-empty"></i> /d/tracing/trace_marker</p>
+</li>
+<li>
+<p><i class="icon-check-empty"></i> /d/tracing/trace_pipe</p>
+</li>
+<li>
+<p><i class="icon-check-empty"></i> /d/tracing/current_tracer</p>
+</li>
+<li>
+<p><i class="icon-check-empty"></i> /d/tracing/options/print-tgid         // set if present</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_file_utils">File Utils</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>exists</p>
+</li>
+<li>
+<p>truncate by creat</p>
+</li>
+<li>
+<p>writable</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_trace_clock">Trace Clock</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Any write to the trace_clock sysfs file will reset the buffer, so only update it if the requested value is not the
+current clock.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_setup_trace">Setup Trace</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>setCategoriesEnableFromFile(g_categoriesFile);</p>
+</li>
+<li>
+<p>setTraceOverwriteEnable(g_traceOverwrite);</p>
+</li>
+<li>
+<p>setTraceBufferSizeKB(g_traceBufferSizeKB);</p>
+</li>
+<li>
+<p>setGlobalClockEnable(true);</p>
+</li>
+<li>
+<p>setPrintTgidEnableIfPresent(true);</p>
+</li>
+<li>
+<p>setKernelTraceFuncs(g_kernelTraceFuncs);</p>
+</li>
+<li>
+<p>set enabled</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cleanup_trace">Cleanup Trace</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>disable all</p>
+</li>
+<li>
+<p>setTraceOverwriteEnable(true);</p>
+</li>
+<li>
+<p>setTraceBufferSizeKB(1);</p>
+</li>
+<li>
+<p>setGlobalClockEnable(false);</p>
+</li>
+<li>
+<p>setPrintTgidEnableIfPresent(false);</p>
+</li>
+<li>
+<p>setKernelTraceFuncs(NULL);</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_start_trace">Start Trace</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>start</p>
+</li>
+<li>
+<p>clear</p>
+</li>
+<li>
+<p>sync clock marker</p>
+</li>
+<li>
+<p>stop</p>
+</li>
+<li>
+<p>dump</p>
+</li>
+<li>
+<p>clear</p>
+</li>
+<li>
+<p>cleanup</p>
+</li>
+</ol>
+</div>
+</div>
+</div></p>
+
+	<hr />
+
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <div id="footer">
+<!--
+      <div class="container">
+        <p class="muted credit">&copy; 2014 | Mixed with <a href="http://getbootstrap.com/">Bootstrap v3.1.1</a>
+         | Baked with <a href="http://jbake.org">JBake v2.3.0</a></p>
+      </div>
+-->
+      <div class="container">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US">
+        <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a>
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US">
+        Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License</a>.
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-15840099-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Compiler Optimizations</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+   
+
+
+		<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../notes/about.html">Farley Lai</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../index.html">Blog</a></li>
+            <li><a href="../../notes/projects.html">Projects</a></li>
+            <li><a href="../../notes/research.html">Research</a></li>
+            <li><a href="../../notes/events.html">Events</a></li>
+            <li><a href="../../notes/art.html">Art</a></li>
+            <li><a href="../../archive.html">Archive</a></li>
+            <li><a href="../../feed.xml">Feed</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shortcut <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="../../notes/linux.html">Linux</a></li>
+                <li><a href="../../notes/groovy.html">Groovy</a></li>
+                <li><a href="../../notes/tools.html">Tools</a></li>
+                <li><a href="../../notes/resources.html">Resources</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Compiler</li>
+                <li><a href="../../notes/compiler/DataFlowAnalysis.html">Data-Flow Analsyis</a></li>
+                <li><a href="../../notes/compiler/StaticSingleAssignmentForm.html">Static Single Assignement Form</a></li>
+                <li><a href="../../notes/compiler/CompilerOptimizations.html">Compiler Optimizations</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/farleylai"><i class="fa fa-github"></i></a></li>
+            <li><a href="https://plus.google.com/+FarleyLai/"><i class="fa fa-google-plus"></i></a>
+            <li><a href="https://www.linkedin.com/in/farleylai"><i class="fa fa-linkedin"></i></a>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">
+
+	
+	<div class="page-header">
+		<h1>Compiler Optimizations</h1>
+	</div>
+
+	<p><em>14 October 2015</em></p>
+
+	<p><div class="sect1">
+<h2 id="_local_optimization">Local Optimization</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_local_value_numbering">Local Value Numbering</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Record distinct values</p>
+</li>
+<li>
+<p>Subexpression elimination</p>
+</li>
+<li>
+<p>Static single assignement</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tree_height_balancing">Tree-Height Balancing</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Maximize ILP</p>
+</li>
+<li>
+<p>Basic block as a dependency graph</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Root if</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>T<sub>i</sub> is reused: |USES(T<sub>i</sub>)| &gt; 1</p>
+</li>
+<li>
+<p>Inconsistent op: |USES(T<sub>i</sub>)| == 1 \(\wedge\) OP<sub>USES(T\(_i\))</sub> != OP<sub>i</sub></p>
+</li>
+<li>
+<p>LiveOut(T<sub>i</sub>)</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Rank</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Constants              0</p>
+</li>
+<li>
+<p>Upward-exposed names   1</p>
+</li>
+<li>
+<p>Defined names          sum of Rank(leaves)</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_regional_optimization">Regional Optimization</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_superlocal_value_numbering">Superlocal Value Numbering</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Per path as a block for extended LVN analysis</p>
+</li>
+<li>
+<p>Branch to save the prefix states for reuse in other paths</p>
+</li>
+<li>
+<p>Scoped state tables for traversal using the worklist algorithm</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_loop_unrolling">Loop Unrolling</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Reduces looping overhead</p>
+</li>
+<li>
+<p>Increases IR and compilation time</p>
+</li>
+<li>
+<p>Increases instruction cache usage</p>
+</li>
+<li>
+<p>Better instruction scheduling of independent unrolled operations</p>
+</li>
+<li>
+<p>Better locality and facilitate multi-word operations</p>
+</li>
+<li>
+<p>Exposes cross-iteration redundancies to reuse memory references</p>
+</li>
+<li>
+<p>Potential register spills due to increase on register usage</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_global_intraprocedural_optimization">Global/Intraprocedural Optimization</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_finding_uninitialized_variables_with_live_information">Finding Uninitialized Variables with Live Information</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Build UEVar and VarKill for each basic block</p>
+</li>
+<li>
+<p>Iteratively compute LiveOut for each basic block</p>
+<div class="ulist">
+<ul>
+<li>
+<p>fixed-point solution</p>
+</li>
+<li>
+<p>faster if evaluting in reverse order</p>
+</li>
+<li>
+<p>\(\forall v \in\) LiveOut(\(n_0\)), \(v\) might be uninitialized</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="_uses_for_live_variables">Uses for Live Variables</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Register allocation for live variables</p>
+</li>
+<li>
+<p>Elimination of useless store operations</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_global_code_placement">Global Code Placement</h3>
+<div class="paragraph">
+<p>Better instruction cache usage.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Asymmetric fall-through branch for global code placement</p>
+</li>
+<li>
+<p>A block should be followed by its most frequent successors</p>
+</li>
+<li>
+<p>Move infrequently executed code to the end of the procedure</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_analsysis">Analsysis</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Estimates of each branch&#8217;s and CFG edge' execution frequency by profiling</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Instrumented executables: compiler generates code to count and save statistics for later use</p>
+</li>
+<li>
+<p>Timer interrupts: build a histogram of program counter locations</p>
+</li>
+<li>
+<p>Performance counters: Taken branches from hardware counters</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Branch execution frequency as CFG edge weights</p>
+</li>
+<li>
+<p>Construct hot disjoint paths of chains</p>
+<div class="ulist">
+<ul>
+<li>
+<p>consider edges in some order of weights</p>
+</li>
+<li>
+<p>merge chains if possible</p>
+</li>
+<li>
+<p>infreqent cross-chain edges</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_code_placement">Code Placement</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Blocks in a chain are placed in order</p>
+</li>
+<li>
+<p>Chains are selected in priorities</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_interprocedural_optimization">Interprocedural Optimization</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_inline_substitution">Inline Substitution</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Callee size &lt; linkage code</p>
+</li>
+<li>
+<p>Caller size constraint</p>
+</li>
+<li>
+<p>Dynamic call count</p>
+</li>
+<li>
+<p>Static call count</p>
+</li>
+<li>
+<p>Parameter count</p>
+</li>
+<li>
+<p>Constant-valued actual parameters for folding</p>
+</li>
+<li>
+<p>Calls in the procedure for leaves</p>
+</li>
+<li>
+<p>Loop nesting depth</p>
+</li>
+<li>
+<p>Fraction of execution time</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_procedure_placement">Procedure Placement</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Build call graph G</p>
+</li>
+<li>
+<p>Associate edges with execution frequency as weights</p>
+</li>
+<li>
+<p>Order edges by weights in a priority queue</p>
+</li>
+<li>
+<p>Process edges from the queue by collapsing procedure nodes into the placement list</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_compiler_organization">Compiler Organization</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>A compilation unit can be a procedure, a class or a source file</p>
+</li>
+<li>
+<p>Enlarge a compilation unit</p>
+</li>
+<li>
+<p>Perform optimization at link time on statically linked code</p>
+</li>
+<li>
+<p>Inline functions in the same compilation unit</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></p>
+
+	<hr />
+
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <div id="footer">
+<!--
+      <div class="container">
+        <p class="muted credit">&copy; 2014 | Mixed with <a href="http://getbootstrap.com/">Bootstrap v3.1.1</a>
+         | Baked with <a href="http://jbake.org">JBake v2.3.0</a></p>
+      </div>
+-->
+      <div class="container">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US">
+        <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a>
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US">
+        Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License</a>.
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-15840099-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

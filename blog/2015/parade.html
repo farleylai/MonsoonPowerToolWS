@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Parade</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+   
+
+	
+		<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../notes/about.html">Farley Lai</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../index.html">Blog</a></li>
+            <li><a href="../../notes/projects.html">Projects</a></li>
+            <li><a href="../../notes/research.html">Research</a></li>
+            <li><a href="../../notes/events.html">Events</a></li>
+            <li><a href="../../notes/art.html">Art</a></li>
+            <li><a href="../../archive.html">Archive</a></li>
+            <li><a href="../../feed.xml">Feed</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shortcut <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="../../notes/linux.html">Linux</a></li>
+                <li><a href="../../notes/groovy.html">Groovy</a></li>
+                <li><a href="../../notes/tools.html">Tools</a></li>
+                <li><a href="../../notes/resources.html">Resources</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Compiler</li>
+                <li><a href="../../notes/compiler/DataFlowAnalysis.html">Data-Flow Analsyis</a></li>
+                <li><a href="../../notes/compiler/StaticSingleAssignmentForm.html">Static Single Assignement Form</a></li>
+                <li><a href="../../notes/compiler/CompilerOptimizations.html">Compiler Optimizations</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/farleylai"><i class="fa fa-github"></i></a></li>
+            <li><a href="https://plus.google.com/+FarleyLai/"><i class="fa fa-google-plus"></i></a>
+            <li><a href="https://www.linkedin.com/in/farleylai"><i class="fa fa-linkedin"></i></a>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">
+
+	
+	<div class="page-header">
+		<h1>Parade</h1>
+	</div>
+
+	<p></i><em>14 October 2015</em>
+        <i class="fa fa-tag"></i>
+        
+        <a href="/tags/devdraft.html">devdraft</a>
+        
+        <a href="/tags/ algorithm.html"> algorithm</a>
+        </p>
+	<p><div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="http://www.devdraft.com">DevDraft</a> just held the Sept. challenge 2015 with an intriguing algorithmic problem. After days
+of contemplation, my solution reaches 100% code correctness and perfect algorithmic problem solving for runtime
+efficiency.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_problem">Problem</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A nearby city has recently undergone a massive revitalization effort and, in order to celebrate and attract economic
+investment, is going to throw a parade. The mayor plans to deploy a number of security forces for the days leading up to
+the parade to keep the parade route free of vandalism. However, the budget is limited, so the mayor wants to make sure
+the security is deployed in such a way as to maximize effectiveness.</p>
+</div>
+<div class="paragraph">
+<p>You are given a list of integers representing the threat of vandalism occurring on the city blocks along the parade
+route&#8212;0 means vandalism will not occur on a block, and greater integers indicate a greater danger of vandalism
+occurring. The parade is planned to move in a straight line and pass by every block exactly once. You are also given
+several security forces, each of which can patrol a number of adjacent blocks, totally nullifying the threat on the
+blocks they patrol. The forces come in different types with different patrol lengths; for example, an officer on bike
+can patrol farther than an officer on foot. The forces are represented by a list of pairs of integers, where the first
+integer is the number of adjacent blocks a type of force can patrol and the second is how many forces are available of
+that type.</p>
+</div>
+<div class="paragraph">
+<p>The number of forces available is limited so you must place them strategically to minimize the sum of threat levels of
+all blocks that are not patrolled. Because the minimum threat level may be achieved by multiple arrangements of
+security, we ask that you output only the minimum total threat level that can be achieved, and not the positions of the
+forces.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__cpp_implementation">{cpp} Implementation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Originally, the implementation is in Groovy but the runtime performance can be 100X slower than its {cpp} counterpart.
+Therefore, I decided to submit the {cpp} version though many Groovy constructs are not supported by the {cpp} STL and must
+be reimplemented. As expected, the rewards pay off.</p>
+</div>
+<div class="paragraph">
+<p>The following code in {cpp} implements a branch and bound dynamic programming algorithm to solve the problem. More
+information about the solution analysis and complexity is available on the
+<a href="https://github.com/farleylai/DevDraft/tree/master/2015/SepChallenge/Part1">repo</a>.</p>
+</div>
+<script
+src="http://gist-it.appspot.com/https://github.com/farleylai/DevDraft/blob/master/2015/SepChallenge/Part1/Parade.cpp"></script>
+</div>
+</div></p>
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        <script language="javascript" type="text/javascript">
+        function popup(url, w, h) {
+            var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+            var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+            var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+            var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+            var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+            var top = ((height / 2) - (h / 2)) + dualScreenTop;
+            size='width=' + w + ',height=' + h;
+            pos='top=' + top + ',left=' + left
+            newwindow = window.open(url,'Share','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,' + size + ',' + pos);
+            if (window.focus) {newwindow.focus()}
+            return false;
+        }
+        </script>
+        <div class="fb-like" data-href="http://farleylai.github.io/blog/2015/parade.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+        <a href="https://plus.google.com/share?url=http://farleylai.github.io/blog/2015/parade.html" onclick="return popup(this.href, 500, 600);"><i class="fa fa-google-plus"></i></a>
+        <a href="http://twitter.com/share?url=http://farleylai.github.io/blog/2015/parade.html" onclick="return popup(this.href, 450, 300);"><i class="fa fa-twitter"></i></a>
+        <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://farleylai.github.io/blog/2015/parade.html" onclick="return popup(this.href, 600, 600);"><i class="fa fa-linkedin"></i></a>
+    <hr />
+    <div id="disqus_thread">
+        <script type="text/javascript">
+            var disqus_shortname = 'farleylai';
+            var disqus_identifier = 'null';
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <div id="footer">
+<!--
+      <div class="container">
+        <p class="muted credit">&copy; 2014 | Mixed with <a href="http://getbootstrap.com/">Bootstrap v3.1.1</a>
+         | Baked with <a href="http://jbake.org">JBake v2.3.0</a></p>
+      </div>
+-->
+      <div class="container">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US">
+        <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a>
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US">
+        Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License</a>.
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-15840099-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>
+

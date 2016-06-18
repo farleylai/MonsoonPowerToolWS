@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Voice Activity Detection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+   
+
+
+		<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../notes/about.html">Farley Lai</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../index.html">Blog</a></li>
+            <li><a href="../../notes/projects.html">Projects</a></li>
+            <li><a href="../../notes/research.html">Research</a></li>
+            <li><a href="../../notes/events.html">Events</a></li>
+            <li><a href="../../notes/art.html">Art</a></li>
+            <li><a href="../../archive.html">Archive</a></li>
+            <li><a href="../../feed.xml">Feed</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shortcut <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="../../notes/linux.html">Linux</a></li>
+                <li><a href="../../notes/groovy.html">Groovy</a></li>
+                <li><a href="../../notes/tools.html">Tools</a></li>
+                <li><a href="../../notes/resources.html">Resources</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Compiler</li>
+                <li><a href="../../notes/compiler/DataFlowAnalysis.html">Data-Flow Analsyis</a></li>
+                <li><a href="../../notes/compiler/StaticSingleAssignmentForm.html">Static Single Assignement Form</a></li>
+                <li><a href="../../notes/compiler/CompilerOptimizations.html">Compiler Optimizations</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/farleylai"><i class="fa fa-github"></i></a></li>
+            <li><a href="https://plus.google.com/+FarleyLai/"><i class="fa fa-google-plus"></i></a>
+            <li><a href="https://www.linkedin.com/in/farleylai"><i class="fa fa-linkedin"></i></a>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">
+
+	
+	<div class="page-header">
+		<h1>Voice Activity Detection</h1>
+	</div>
+
+	<p><em>15 December 2015</em></p>
+
+	<p><div class="sect1">
+<h2 id="_three_voice_activity_features">Three Voice Activity Features</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_short_term_energy_e">Short-Term Energy (E)</h3>
+<div class="paragraph">
+<p>Sum of squared float sample values.</p>
+</div>
+<div class="paragraph">
+<p>\(Energy_{primthreshold} = 40\)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dominant_spectral_frequency_component_f">Dominant Spectral Frequency Component (F)</h3>
+<div class="paragraph">
+<p>The frequency of the maximum spectrum magnitude.</p>
+</div>
+<div class="paragraph">
+<p>\(F_{primthreshold} = 185 (Hz)\)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_spectral_flatness_measure_sfm">Spectral Flatness Measure (SFM)</h3>
+<div class="paragraph">
+<p>\(SFM_{db} = 10log_{10}(G_m/A_m)\)</p>
+</div>
+<div class="paragraph">
+<p>\(SFM_{primthreshold} = 5\)</p>
+</div>
+<div class="paragraph">
+<p>\(G_m = \big(\prod\limits_{n=0}<sup>{n-1} a_i \big)</sup>{1/n} = \exp \big[ \frac{1}{n} \sum\limits_{n=0}^{n-1}\ln a_i \big] \)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint matlab language-matlab"><code>pxx = periodogram(a);
+%figure(2)
+%plot(pxx)
+num=geomean(pxx);
+den=mean(pxx);
+spf=num/den ;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_power_spectral_density_estimate_using_fft_psd">Power Spectral Density Estimate using FFT (PSD)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint matlab language-matlab"><code>N = length(x);
+xdft = fft(x);
+xdft = xdft(1:N/2+1);
+psdx = (1/(Fs*N)) * abs(xdft).^2;
+psdx(2:end-1) = 2*psdx(2:end-1);
+freq = 0:Fs/length(x):Fs/2;
+
+plot(freq,10*log10(psdx))
+grid on
+title('Periodogram Using FFT')
+xlabel('Frequency (Hz)')
+ylabel('Power/Frequency (dB/Hz)')</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div></p>
+
+	<hr />
+
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <div id="footer">
+<!--
+      <div class="container">
+        <p class="muted credit">&copy; 2014 | Mixed with <a href="http://getbootstrap.com/">Bootstrap v3.1.1</a>
+         | Baked with <a href="http://jbake.org">JBake v2.3.0</a></p>
+      </div>
+-->
+      <div class="container">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US">
+        <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a>
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US">
+        Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License</a>.
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-15840099-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

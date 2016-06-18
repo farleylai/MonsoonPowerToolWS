@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Deep Learning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+   
+
+
+		<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../notes/about.html">Farley Lai</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../index.html">Blog</a></li>
+            <li><a href="../../notes/projects.html">Projects</a></li>
+            <li><a href="../../notes/research.html">Research</a></li>
+            <li><a href="../../notes/events.html">Events</a></li>
+            <li><a href="../../notes/art.html">Art</a></li>
+            <li><a href="../../archive.html">Archive</a></li>
+            <li><a href="../../feed.xml">Feed</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shortcut <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="../../notes/linux.html">Linux</a></li>
+                <li><a href="../../notes/groovy.html">Groovy</a></li>
+                <li><a href="../../notes/tools.html">Tools</a></li>
+                <li><a href="../../notes/resources.html">Resources</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Compiler</li>
+                <li><a href="../../notes/compiler/DataFlowAnalysis.html">Data-Flow Analsyis</a></li>
+                <li><a href="../../notes/compiler/StaticSingleAssignmentForm.html">Static Single Assignement Form</a></li>
+                <li><a href="../../notes/compiler/CompilerOptimizations.html">Compiler Optimizations</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/farleylai"><i class="fa fa-github"></i></a></li>
+            <li><a href="https://plus.google.com/+FarleyLai/"><i class="fa fa-google-plus"></i></a>
+            <li><a href="https://www.linkedin.com/in/farleylai"><i class="fa fa-linkedin"></i></a>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">
+
+	
+	<div class="page-header">
+		<h1>Deep Learning</h1>
+	</div>
+
+	<p><em>28 February 2016</em></p>
+
+	<p><div class="sect1">
+<h2 id="_logistic_classifier">Logistic Classifier</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A linear classifier in the form \(WX + b = Y\).</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">logit</dt>
+<dd>
+<p>A logit is a unit of measurement score to report relative differences between candidate ability estimates and
+item difficulties.</p>
+</dd>
+<dt class="hdlist1">softmax</dt>
+<dd>
+<p>Turn scores or logits into probabilities</p>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint groovy language-groovy"><code>def softmax(Y) {
+  def EY = Y.collect { Math.pow(Math.E, it) }
+  EY.collect { it / EY.sum() }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Increasing the scale of the scores shows high confidence and low confidence otherwise.
+The confidence should increase as the classifier learns.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">One-Hot Encoding</dt>
+<dd>
+<p>Each class has only one feature probability set to one.</p>
+</dd>
+<dt class="hdlist1">Cross Entropy \(D(S, L)=-\Sigma_iL_ilog(S_i)\)</dt>
+<dd>
+<p>Distance between softmax probabilities and one-hot encoding labels which is NOT symmetric.</p>
+</dd>
+<dt class="hdlist1">Multinominal Logistic Classification</dt>
+<dd>
+<p>\(D(S(WX+b), L)\)</p>
+</dd>
+<dt class="hdlist1">Training Loss \(L=\frac{1}{n}\Sigma_iD(S(WX_i+b), L_i)\)</dt>
+<dd>
+<p>Average cross-entropy</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Find \(W\) and \(b\) such that \(L\) is minimized using techniques such as the gradient descent.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Rule of 30</dt>
+<dd>
+<p>Statistically significant accuracy improvement is likely to be at least 30 example label changes.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The larger validation set size, the better.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; 30000 examples
+Changes &gt; 0.1% in accuracy</pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Rule of Thumb</dt>
+<dd>
+<p>Compute the gradient of the traning loss is about 3X as computing the training loss.</p>
+</dd>
+<dt class="hdlist1">Stochastic Gradient Descent (S.G.D.)</dt>
+<dd>
+<p>Compute only a randomly selected subset of the examples in the dataset at the price of more iterations.</p>
+</dd>
+<dt class="hdlist1">Momentum \(0.9M + \Delta L\)</dt>
+<dd>
+<p>Maintain a running average of the gradient of training loss.</p>
+</dd>
+<dt class="hdlist1">Learning Rate Decay</dt>
+<dd>
+<p>Exponential or plateau as long as it is decreasing for convergence.</p>
+</dd>
+<dt class="hdlist1">Hyper-Parameter Tuning</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Initial learning rate</p>
+</li>
+<li>
+<p>Learning rate decay</p>
+</li>
+<li>
+<p>Momentum</p>
+</li>
+<li>
+<p>Batch size</p>
+</li>
+<li>
+<p>Weight initialization</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Lower the learning rate first.
+AdaGrad</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deep_learning_networks">Deep Learning Networks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Linear models are limited in expressiveness but numerically very stable.
+- Small changes of input cannot lead to big changes of output.
+- Derivatives are constant.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Non-linearities</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Rectified linear units (ReLu)</p>
+</li>
+<li>
+<p>Deeper with fewer parameters than wider</p>
+</li>
+<li>
+<p>Hierarchical learning levels of abstractions</p>
+</li>
+<li>
+<p>Bigger data needed</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>BP usually takes twice memory than FP.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Skinny Jeans Problem</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>The right size for data is hard to fit all</p>
+</li>
+<li>
+<p>Larger model with regularization for generalization</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Overfitting Preventions</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Early terminiation when validation set performance drops</p>
+</li>
+<li>
+<p>Regularization</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Apply artificial constraints on the network to reduce the number of free parameters</p>
+</li>
+<li>
+<p>L2 regularization as stretch pants penalizes large weights by adding L2 norms of weights to loss</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_convolutional_neural_networks">Convolutional Neural Networks</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Statistical invariance</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Things do not change regardless of time and space</p>
+</li>
+<li>
+<p>Weight sharing between statistically invariance objects</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Convnets</dt>
+<dd>
+<p>Networks that share parameters across space</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pooling</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Better subsampling than a large stride for convolution</p>
+</li>
+<li>
+<p>[max | avg] pooling with hyper parameters including pooling size and stride</p>
+</li>
+<li>
+<p>parameter free and more accurate</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>1x1 convolutions</p>
+<div class="ulist">
+<ul>
+<li>
+<p>mini-deep network over the patch as matrix multiplications</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>iNCEPTION</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Composition of pooling and convolutions</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_learning_from_text_sequences">Learning from Text Sequences</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Embeddings</dt>
+<dd>
+<p>vectors to represent words and show similarities</p>
+</dd>
+<dt class="hdlist1">Word2Vec</dt>
+<dd>
+<p>PCA is insufficient but t-SNE works</p>
+<div class="ulist">
+<ul>
+<li>
+<p>cosine distance \(\frac{V_1 * V_2}{||V_1||||V_2||}\) is bettern than L2 norm \(||V_1 - V_2||^2_2\) to compare embeddings</p>
+</li>
+<li>
+<p>faster sampled softmax</p>
+</li>
+<li>
+<p>semantic/syntactic analogy</p>
+</li>
+<li>
+<p>skip-gram model</p>
+</li>
+<li>
+<p>continuous bag of words (CBOW) model</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Recurrent Neural Networks</dt>
+<dd>
+<p>Extract patterns over time</p>
+<div class="ulist">
+<ul>
+<li>
+<p>assume the sequence is stationary and apply the same classifier and weights</p>
+</li>
+<li>
+<p>take the result summary from previous classifications into account as input</p>
+</li>
+<li>
+<p>BP as correlated updates which is bad for SGD that expects uncorrelated updates</p>
+<div class="ulist">
+<ul>
+<li>
+<p>exploding gradients by gradient clipping</p>
+</li>
+<li>
+<p>vanishing gradients by long short-term memory (LSTM)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Long Short-Term Memory</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>LSTM cell for RNN supports write, read and erase/writeback</p>
+</li>
+<li>
+<p>Continuous differentiable gate with weights [0.0, 1.0] for BP</p>
+</li>
+<li>
+<p>Regularizations</p>
+<div class="ulist">
+<ul>
+<li>
+<p>L2</p>
+</li>
+<li>
+<p>dropout of input and output</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Beam search by keeping most likely candidate hypotheses</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div></p>
+
+	<hr />
+
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <div id="footer">
+<!--
+      <div class="container">
+        <p class="muted credit">&copy; 2014 | Mixed with <a href="http://getbootstrap.com/">Bootstrap v3.1.1</a>
+         | Baked with <a href="http://jbake.org">JBake v2.3.0</a></p>
+      </div>
+-->
+      <div class="container">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US">
+        <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a>
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US">
+        Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License</a>.
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-15840099-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

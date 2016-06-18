@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JBake</title>
+    <link>http://farley.dynagrid.net</link>
+    <atom:link href="http://farley.dynagrid.net/feed.xml" rel="self" type="application/rss+xml" />
+    <description>JBake Bootstrap Template</description>
+    <language>en-gb</language>
+    <pubDate>Fri, 17 Jun 2016 20:27:02 -0500</pubDate>
+    <lastBuildDate>Fri, 17 Jun 2016 20:27:02 -0500</lastBuildDate>
+
+    
+    <item>
+      <title>Monsoon Power Tool Web Service for Scripting</title>
+      <link>http://farley.dynagrid.net/blog/2016/monsoonws.html</link>
+      <pubDate>Fri, 17 Jun 2016 00:00:00 -0500</pubDate>
+      <guid isPermaLink="false">blog/2016/monsoonws.html</guid>
+      <description>
+      &lt;h1 id=&quot;_monsoon_power_tool_web_service_for_scripting&quot; class=&quot;sect0&quot;&gt;Monsoon Power Tool Web Service for Scripting&lt;/h1&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Farley Lai
+2016-06-17 20:26:55 CDT
+:jbake-type: post
+:jbake-status: published
+:jbake-tags: Monsoon power monitor, web service, apache cxf, Gradle, C#&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;imageblock&quot; style=&quot;text-align: center&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;img src=&quot;http://farleylai.github.io/images/monsoonpm.jpg&quot; alt=&quot;monsoonpm&quot; width=&quot;800&quot; height=&quot;Monsoon Power Monitor&quot;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Monsoon Power Monitor is commonly used by researchers and engineers to measure energy consumption at high frequency.
+However, the lack of support for Mac OS X and Linux is a big turnoff and inconvenient.
+The monsoon.py included in AOSP is problematic on Mac OS X. The serial port access over USB blocks indefinitely every so often until reboot.
+The official support for Windows only renders virtual machine and web service as alternatives.
+Unfortunately, accessing the device through a virtual machine is not guaranteed to work.
+For example, the device enumeration API may return nothing, unlike on a real Windows machine.
+Therefore, setting up the web service on real Windows for remote scripting would be the expedient solution.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;imageblock&quot; style=&quot;text-align: center&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;img src=&quot;http://farleylai.github.io/images/monsoonws.png&quot; alt=&quot;monsoonws&quot; width=&quot;640&quot; height=&quot;Monsoon Power PowerTool Web Service&quot;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The Monsoon PowerTool Web Service for scripting I created is hosted on &lt;a href=&quot;https://github.com/farleylai/MonsoonPowerTool&quot;&gt;GitHub&lt;/a&gt;.
+This project contains the server-side web service in C# and a Java client.
+There is also a setup subproject for installation on Windows.
+The Java client can be built with Gradle to test the remote web service and shows output as follows.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;literalblock&quot;&gt;
+&lt;div class=&quot;title&quot;&gt;Test Java client output&lt;/div&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;PowerToolServiceTest &amp;gt; testPowerToolServiceSampling STANDARD_OUT
+    Found connected Monsoon monitor of serial 6325
+        Instant main channel: samples=14355, current=0.248630.2, voltage=3.690500.2
+        Instant main channel: samples=24255, current=0.218130.2, voltage=3.690500.2&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;View build.gradle for details to set the remote WSDL URL.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The Web Service APIs are based on PowerTool 4.0.5.2. while the client APIs depend on the actual stub code generation by Apache CXF.
+Refer to the official &lt;a href=&quot;http://msoon.github.io/powermonitor&quot;&gt;developer&amp;#8217;s guide&lt;/a&gt; for the API overview.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+	  </description>
+    </item>
+    
+    <item>
+      <title>Parade</title>
+      <link>http://farley.dynagrid.net/blog/2015/parade.html</link>
+      <pubDate>Wed, 14 Oct 2015 00:00:00 -0500</pubDate>
+      <guid isPermaLink="false">blog/2015/parade.html</guid>
+      <description>
+      &lt;div id=&quot;preamble&quot;&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.devdraft.com&quot;&gt;DevDraft&lt;/a&gt; just held the Sept. challenge 2015 with an intriguing algorithmic problem. After days
+of contemplation, my solution reaches 100% code correctness and perfect algorithmic problem solving for runtime
+efficiency.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_problem&quot;&gt;Problem&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;A nearby city has recently undergone a massive revitalization effort and, in order to celebrate and attract economic
+investment, is going to throw a parade. The mayor plans to deploy a number of security forces for the days leading up to
+the parade to keep the parade route free of vandalism. However, the budget is limited, so the mayor wants to make sure
+the security is deployed in such a way as to maximize effectiveness.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;You are given a list of integers representing the threat of vandalism occurring on the city blocks along the parade
+route&amp;#8212;0 means vandalism will not occur on a block, and greater integers indicate a greater danger of vandalism
+occurring. The parade is planned to move in a straight line and pass by every block exactly once. You are also given
+several security forces, each of which can patrol a number of adjacent blocks, totally nullifying the threat on the
+blocks they patrol. The forces come in different types with different patrol lengths; for example, an officer on bike
+can patrol farther than an officer on foot. The forces are represented by a list of pairs of integers, where the first
+integer is the number of adjacent blocks a type of force can patrol and the second is how many forces are available of
+that type.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The number of forces available is limited so you must place them strategically to minimize the sum of threat levels of
+all blocks that are not patrolled. Because the minimum threat level may be achieved by multiple arrangements of
+security, we ask that you output only the minimum total threat level that can be achieved, and not the positions of the
+forces.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;__cpp_implementation&quot;&gt;{cpp} Implementation&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Originally, the implementation is in Groovy but the runtime performance can be 100X slower than its {cpp} counterpart.
+Therefore, I decided to submit the {cpp} version though many Groovy constructs are not supported by the {cpp} STL and must
+be reimplemented. As expected, the rewards pay off.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The following code in {cpp} implements a branch and bound dynamic programming algorithm to solve the problem. More
+information about the solution analysis and complexity is available on the
+&lt;a href=&quot;https://github.com/farleylai/DevDraft/tree/master/2015/SepChallenge/Part1&quot;&gt;repo&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;script
+src=&quot;http://gist-it.appspot.com/https://github.com/farleylai/DevDraft/blob/master/2015/SepChallenge/Part1/Parade.cpp&quot;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+	  </description>
+    </item>
+    
+
+  </channel> 
+</rss>
